@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  font-family: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: var(--font-sans), "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f8fafc;
@@ -19,14 +19,14 @@ body {
 
 @layer components {
   .instrument {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
   }
 
   /* ───── PAGE ───── */
   .lp {
     min-height: 100vh;
-    background: #f0f9ff;
-    color: #1e293b;
+    background: #0a0a0a;
+    color: #f1f5f9;
   }
 
   /* ───── TOP NAV — liquid glass ───── */
@@ -78,7 +78,7 @@ body {
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 1.15rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -190,41 +190,47 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 3rem 4rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 3rem;
     gap: 0.75rem;
   }
 
   .lp-hero-title {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 800;
     font-size: clamp(3.5rem, 8vw, 6rem);
-    color: #ffffff;
+    color: #cbd5e1;
     letter-spacing: -0.02em;
     line-height: 1;
-    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.2);
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.7),
+      0 2px 14px rgba(0, 0, 0, 0.55),
+      0 0 60px rgba(0, 0, 0, 0.35);
     margin: 0;
   }
 
   .lp-hero-subtitle {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
     margin: 0;
   }
 
   .lp-hero-cta {
     display: inline-flex;
     align-items: center;
-    align-self: flex-start;
+    align-self: center;
     gap: 0.6rem;
     margin-top: 0.75rem;
     padding: 0.8rem 2rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.88rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -282,7 +288,7 @@ body {
   .lp-statement-section {
     position: relative;
     z-index: 10;
-    background: #f0f9ff;
+    background: #0a0a0a;
   }
 
   .lp-statement {
@@ -308,9 +314,10 @@ body {
   .lp-stmt-small {
     font-family: var(--font-sans), sans-serif;
     font-size: 0.78rem;
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #94a3b8;
     margin: 0 0 3.5rem;
   }
 
@@ -323,21 +330,21 @@ body {
   }
 
   .lp-stmt-line {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: clamp(1.5rem, 3vw, 2.1rem);
-    font-weight: 400;
+    font-weight: 700;
     line-height: 1.5;
-    color: #1e293b;
+    color: #f8fafc;
     margin: 0;
     letter-spacing: -0.01em;
   }
 
   .lp-stmt-main {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-    font-weight: 400;
+    font-weight: 800;
     line-height: 1.35;
-    color: #1e293b;
+    color: #f8fafc;
     margin: 0 0 3rem;
     letter-spacing: -0.01em;
   }
@@ -345,9 +352,10 @@ body {
   .lp-stmt-sub {
     font-family: var(--font-sans), sans-serif;
     font-size: 0.82rem;
+    font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #94a3b8;
     margin: 0 0 3.5rem;
   }
 
@@ -380,7 +388,7 @@ body {
     align-items: center;
     gap: 0.55rem;
     padding: 0.9rem 2rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.88rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -419,15 +427,15 @@ body {
   }
 
   .lp-stmt-cta--outline {
-    color: #475569;
+    color: #cbd5e1;
     background: transparent;
-    border: 1.5px solid #cbd5e1;
+    border: 1.5px solid #475569;
   }
 
   .lp-stmt-cta--outline:hover {
-    color: #0284c7;
+    color: #38bdf8;
     border-color: #0ea5e9;
-    background: rgba(14, 165, 233, 0.04);
+    background: rgba(14, 165, 233, 0.08);
     transform: translateY(-2px);
   }
 
@@ -435,7 +443,7 @@ body {
   .lp-showcase {
     position: relative;
     z-index: 10;
-    background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 30%, #f0f9ff 100%);
+    background: linear-gradient(180deg, #0a0a0a 0%, #111827 30%, #0a0a0a 100%);
     padding: 5rem 0;
   }
 
@@ -545,15 +553,15 @@ body {
     background:
       linear-gradient(
         160deg,
-        rgba(255, 255, 255, 0.75) 0%,
-        rgba(240, 249, 255, 0.6) 100%
+        rgba(30, 41, 59, 0.7) 0%,
+        rgba(15, 23, 42, 0.85) 100%
       );
     backdrop-filter: blur(16px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(71, 85, 105, 0.45);
     box-shadow:
-      0 0 0 0.5px rgba(255, 255, 255, 0.5) inset,
-      0 2px 12px rgba(0, 0, 0, 0.04),
-      0 8px 32px rgba(14, 165, 233, 0.04);
+      0 0 0 0.5px rgba(148, 163, 184, 0.1) inset,
+      0 2px 12px rgba(0, 0, 0, 0.3),
+      0 8px 32px rgba(0, 0, 0, 0.25);
   }
 
   .lp-showcase-card-label {
@@ -562,18 +570,18 @@ body {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #0284c7;
-    background: rgba(14, 165, 233, 0.08);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
     padding: 0.25rem 0.65rem;
     border-radius: 8px;
     margin-bottom: 0.7rem;
   }
 
   .lp-showcase-card-title {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 1.2rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-weight: 800;
+    color: #f1f5f9;
     margin: 0 0 0.5rem;
     letter-spacing: -0.01em;
   }
@@ -581,7 +589,7 @@ body {
   .lp-showcase-card-desc {
     font-size: 0.85rem;
     line-height: 1.65;
-    color: #64748b;
+    color: #94a3b8;
     margin: 0;
   }
 
@@ -596,7 +604,7 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(148, 163, 184, 0.25);
+    background: rgba(148, 163, 184, 0.35);
     border: none;
     cursor: pointer;
     padding: 0;
@@ -604,7 +612,7 @@ body {
   }
 
   .lp-carousel-dot:hover {
-    background: rgba(148, 163, 184, 0.4);
+    background: rgba(148, 163, 184, 0.55);
   }
 
   .lp-carousel-dot--active {
@@ -623,14 +631,14 @@ body {
   .lp-how-section {
     position: relative;
     z-index: 10;
-    background: #f0f9ff;
+    background: #0a0a0a;
   }
 
   /* ───── FOOTER ───── */
   .lp-footer {
     text-align: center;
     padding: 2.5rem 2rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid rgba(71, 85, 105, 0.4);
   }
 
   .lp-footer-inner {
@@ -642,16 +650,16 @@ body {
   }
 
   .lp-footer-brand {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #1e293b;
+    color: #f1f5f9;
   }
 
   .lp-footer-sep {
-    color: #cbd5e1;
+    color: #475569;
     font-size: 0.7rem;
   }
 
@@ -665,13 +673,13 @@ body {
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #94a3b8;
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .lp-footer a:hover {
-    color: #0ea5e9;
+    color: #38bdf8;
   }
 
   /* ───── LEGACY / OTHER ───── */
@@ -690,7 +698,7 @@ body {
   }
 
   .lp-detail-num {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-style: italic;
     font-size: 0.85rem;
     color: #64748b;
@@ -699,7 +707,7 @@ body {
   }
 
   .lp-detail h3 {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 1.35rem;
     font-weight: 600;
     margin: 0 0 0.75rem;
@@ -716,7 +724,7 @@ body {
   .lp-detail-link {
     display: inline-block;
     margin-top: 1rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-style: italic;
     font-size: 0.88rem;
     color: #475569;
@@ -735,7 +743,7 @@ body {
   }
 
   .lp-closing-text {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-style: italic;
     font-size: 1rem;
     color: #64748b;
@@ -754,7 +762,7 @@ body {
     display: inline-flex;
     align-items: center;
     padding: 0.8rem 2rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.9rem;
     background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
     color: #fff;
@@ -775,7 +783,7 @@ body {
     display: inline-flex;
     align-items: center;
     padding: 0.8rem 2rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.9rem;
     background: transparent;
     color: #475569;
@@ -1179,7 +1187,7 @@ body {
   }
 
   .civ-header-title {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 1.15rem;
     font-weight: 800;
     color: #0c4a6e;
@@ -1223,7 +1231,7 @@ body {
   }
 
   .civ-section-title {
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1274,7 +1282,7 @@ body {
     align-items: center;
     gap: 0.45rem;
     padding: 0.78rem 1rem;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.01em;
@@ -1531,7 +1539,7 @@ body {
     position: relative;
     padding: 0.35rem 0.9rem;
     border-radius: 9999px;
-    font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+    font-family: var(--font-sans), "Inter", sans-serif;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -1681,7 +1689,7 @@ h1,
 h2,
 h3,
 .serif-font {
-  font-family: var(--font-sans), "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-sans), "Inter", sans-serif;
 }
 
 /* Glass morphism effect */

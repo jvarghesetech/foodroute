@@ -125,7 +125,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, delay: 0.4, ease }}
           >
-            FoodRoute.
+            FoodRoute
           </motion.h1>
           <motion.p
             className="lp-hero-subtitle"

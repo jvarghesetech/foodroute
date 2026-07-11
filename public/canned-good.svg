@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Can body (cylinder side) -->
+  <rect x="12" y="14" width="40" height="36" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+  <!-- Top lid (ellipse to give cylinder feel) -->
+  <ellipse cx="32" cy="14" rx="20" ry="4" fill="#cbd5e1" stroke="#0f172a" stroke-width="2"/>
+  <!-- Bottom base (ellipse) -->
+  <ellipse cx="32" cy="50" rx="20" ry="4" fill="#94a3b8" stroke="#0f172a" stroke-width="2"/>
+  <!-- Red label band wrapping the middle -->
+  <rect x="12" y="24" width="40" height="16" fill="#dc2626" stroke="#0f172a" stroke-width="2"/>
+  <!-- Pull tab on the top of the lid -->
+  <ellipse cx="32" cy="13" rx="6" ry="1.5" fill="#64748b" stroke="#0f172a" stroke-width="1"/>
+  <!-- Decorative frame on the label -->
+  <rect x="20" y="28" width="24" height="8" fill="none" stroke="#ffffff" stroke-width="0.8" rx="1.5"/>
+</svg>
