@@ -2,6 +2,7 @@
 
 A smart food security routing platform for Ontario. FoodRoute helps both **government planners** optimize food bank placement and **households** find the best food bank based on their needs, live traffic, and real-time demand.
 
+> Rebuilt from [ERoute](https://github.com/phintruong/ERoute) (Hack Canada 2025) — same architecture, food-bank flavored.
 
 ## Features
 

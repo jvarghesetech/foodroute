@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     let metadata: Record<string, unknown> | null = null;
 
     if (contentType.includes('multipart/form-data')) {
+      // FormData from exportToMap — contains glb file + metadata JSON + name
       const formData = await request.formData();
       const glbFile = formData.get('glb') as File | null;
       const metadataStr = formData.get('metadata') as string | null;
@@ -40,6 +41,7 @@ export async function POST(request: NextRequest) {
         }
       }
     } else if (contentType.includes('application/octet-stream')) {
+      // Binary GLB data (legacy path)
       arrayBuffer = await request.arrayBuffer();
       name = request.headers.get('x-building-name') || 'building';
     } else {
@@ -92,6 +94,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// List all saved buildings (metadata only — GLB binary is excluded for list efficiency)
 export async function GET() {
   try {
     const db = await getDb();

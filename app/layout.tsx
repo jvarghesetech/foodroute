@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  weight: ["400", "500", "600", "700", "800", "900"],
+const plusJakarta = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   style: ["normal", "italic"],
   variable: "--font-sans",
+});
+
+const inter = Inter({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-readable",
 });
 
 export const metadata: Metadata = {
   title: "FoodRoute",
   description: "Model food bank placement, assess need by urgency, and route clients. For Ontario food security — government and civilians.",
   icons: {
-    icon: "canned-good.svg",
+    icon: "logo.png",
   },
 };
 
@@ -25,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} antialiased font-sans`}
+        className={`${plusJakarta.variable} ${inter.variable} antialiased font-sans`}
       >
         {children}
         <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" async></script>

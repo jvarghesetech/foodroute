@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 
-
 const MotionLink = motion.create(Link);
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -125,7 +124,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, delay: 0.4, ease }}
           >
-            FoodRoute
+            FoodRoute.
           </motion.h1>
           <motion.p
             className="lp-hero-subtitle"
