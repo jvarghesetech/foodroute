@@ -1,0 +1,23 @@
+{
+  "id": "bld_mrgtwe8t_bd7izxj",
+  "name": "Lucas",
+  "beds": 0,
+  "metadata": {
+    "totalBeds": 86,
+    "erBeds": 0,
+    "operatingRooms": 1,
+    "traumaRooms": 0,
+    "ambulances": 0,
+    "rooms": 42,
+    "doctors": 0,
+    "nurses": 73,
+    "usableInpatientBeds": 0,
+    "usableERBays": 0,
+    "usableORs": 1,
+    "totalFloorArea": 2947.5,
+    "groundFloorArea": 982.5,
+    "numberOfFloors": 3,
+    "createdAt": "2026-07-11T20:40:12.293Z"
+  },
+  "createdAt": "2026-07-11T20:40:12.319Z"
+}
