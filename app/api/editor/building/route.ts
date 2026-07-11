@@ -1,56 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, writeFile, mkdir, readdir, unlink, stat } from 'fs/promises';
-import path from 'path';
-
-// Directory where buildings are saved
-const BUILDINGS_DIR = path.join(process.cwd(), 'public', 'map-data', 'buildings');
+import { getDb } from '@/lib/foodroute/mongoClient';
 
 // Simple ID generator
 function generateId(): string {
   return `bld_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
-// Ensure the buildings directory exists
-async function ensureBuildingsDir() {
-  try {
-    await mkdir(BUILDINGS_DIR, { recursive: true });
-  } catch (error) {
-    // Directory might already exist
-  }
-}
-
-// Clean up old entries (older than 24 hours)
-async function cleanupOldEntries() {
-  try {
-    const files = await readdir(BUILDINGS_DIR);
-    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
-
-    for (const file of files) {
-      if (file.endsWith('.glb')) {
-        const filePath = path.join(BUILDINGS_DIR, file);
-        const stats = await stat(filePath);
-        if (stats.mtimeMs < oneDayAgo) {
-          await unlink(filePath);
-          // Also remove the JSON sidecar
-          const jsonSidecar = path.join(BUILDINGS_DIR, file.replace('.glb', '.json'));
-          try { await unlink(jsonSidecar); } catch { /* may not exist */ }
-          console.log(`🗑️ Cleaned up old building: ${file}`);
-        }
-      }
-    }
-  } catch (error) {
-    // Directory might not exist yet
-  }
-}
+const MAX_GLB_BYTES = 14 * 1024 * 1024; // stay comfortably under Mongo's 16MB document limit
 
 export async function POST(request: NextRequest) {
   try {
-    // Ensure directory exists
-    await ensureBuildingsDir();
-
-    // Clean up old entries periodically
-    await cleanupOldEntries();
-
     const contentType = request.headers.get('content-type') || '';
 
     let arrayBuffer: ArrayBuffer;
@@ -58,7 +17,6 @@ export async function POST(request: NextRequest) {
     let metadata: Record<string, unknown> | null = null;
 
     if (contentType.includes('multipart/form-data')) {
-      // FormData from exportToMap — contains glb file + metadata JSON + name
       const formData = await request.formData();
       const glbFile = formData.get('glb') as File | null;
       const metadataStr = formData.get('metadata') as string | null;
@@ -82,7 +40,6 @@ export async function POST(request: NextRequest) {
         }
       }
     } else if (contentType.includes('application/octet-stream')) {
-      // Binary GLB data (legacy path)
       arrayBuffer = await request.arrayBuffer();
       name = request.headers.get('x-building-name') || 'building';
     } else {
@@ -92,36 +49,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique ID
+    if (arrayBuffer.byteLength > MAX_GLB_BYTES) {
+      return NextResponse.json(
+        { error: `Building file too large (${(arrayBuffer.byteLength / 1024 / 1024).toFixed(1)}MB). Max is 14MB.` },
+        { status: 413 }
+      );
+    }
+
     const id = generateId();
-    const glbFilename = `${id}.glb`;
-    const glbPath = path.join(BUILDINGS_DIR, glbFilename);
-
-    // Save the GLB file
     const buffer = Buffer.from(arrayBuffer);
-    await writeFile(glbPath, buffer);
+    const glbBase64 = buffer.toString('base64');
 
-    // Save metadata sidecar JSON if present
     const beds = (metadata as any)?.erBeds ?? (metadata as any)?.totalBeds ?? 50;
-    const sidecar = {
+
+    const db = await getDb();
+    await db.collection('custom_buildings').insertOne({
       id,
       name,
       beds,
       metadata,
-      createdAt: new Date().toISOString(),
-    };
-    const jsonPath = path.join(BUILDINGS_DIR, `${id}.json`);
-    await writeFile(jsonPath, JSON.stringify(sidecar, null, 2));
+      glbBase64,
+      sizeBytes: arrayBuffer.byteLength,
+      createdAt: new Date(),
+    });
 
-    console.log(`✅ Saved building to ${glbPath} (${(arrayBuffer.byteLength / 1024).toFixed(1)} KB) with metadata`);
+    console.log(`✅ Saved building ${id} to MongoDB (${(arrayBuffer.byteLength / 1024).toFixed(1)} KB)`);
 
     return NextResponse.json({
       id,
       name,
       beds,
       size: arrayBuffer.byteLength,
-      publicPath: `/map-data/buildings/${glbFilename}`,
-      metadata: sidecar,
+      publicPath: `/api/editor/building/${id}`,
+      metadata: { id, name, beds, metadata, createdAt: new Date().toISOString() },
     });
   } catch (error) {
     console.error('Error storing building:', error);
@@ -132,35 +92,22 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// List all saved buildings (enriched with metadata from JSON sidecar)
 export async function GET() {
   try {
-    await ensureBuildingsDir();
-    const files = await readdir(BUILDINGS_DIR);
-    const buildings = [];
+    const db = await getDb();
+    const docs = await db.collection('custom_buildings')
+      .find({}, { projection: { glbBase64: 0 } })
+      .sort({ createdAt: -1 })
+      .toArray();
 
-    for (const f of files) {
-      if (!f.endsWith('.glb')) continue;
-      const id = f.replace('.glb', '');
-      const jsonPath = path.join(BUILDINGS_DIR, `${id}.json`);
-
-      let sidecar: Record<string, unknown> = {};
-      try {
-        const raw = await readFile(jsonPath, 'utf-8');
-        sidecar = JSON.parse(raw);
-      } catch {
-        // No sidecar — use defaults
-      }
-
-      buildings.push({
-        id,
-        filename: f,
-        publicPath: `/map-data/buildings/${f}`,
-        name: (sidecar.name as string) || 'Custom Building',
-        beds: (sidecar.beds as number) || 50,
-        metadata: sidecar.metadata || null,
-      });
-    }
+    const buildings = docs.map((doc) => ({
+      id: doc.id,
+      filename: `${doc.id}.glb`,
+      publicPath: `/api/editor/building/${doc.id}`,
+      name: doc.name || 'Custom Building',
+      beds: doc.beds || 50,
+      metadata: doc.metadata || null,
+    }));
 
     return NextResponse.json({ buildings });
   } catch (error) {
@@ -176,11 +123,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Missing building id' }, { status: 400 });
     }
 
-    const glbPath = path.join(BUILDINGS_DIR, `${id}.glb`);
-    const jsonPath = path.join(BUILDINGS_DIR, `${id}.json`);
-
-    try { await unlink(glbPath); } catch { /* may not exist */ }
-    try { await unlink(jsonPath); } catch { /* may not exist */ }
+    const db = await getDb();
+    await db.collection('custom_buildings').deleteOne({ id });
 
     return NextResponse.json({ ok: true });
   } catch (error) {
